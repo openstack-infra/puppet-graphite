@@ -5,6 +5,7 @@ class graphite(
   $graphite_admin_user = '',
   $graphite_admin_email = '',
   $graphite_admin_password = '',
+  $manage_pip = '',
 ) {
   $packages = [ 'python-django',
                 'python-django-tagging',
@@ -12,7 +13,12 @@ class graphite(
                 'nodejs' ]
 
   include apache
-  include pip
+
+  if $manage_pip == true {
+    package {'pip':
+      ensure => latest
+    }
+  }
 
   package { $packages:
     ensure => present,
