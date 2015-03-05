@@ -91,6 +91,27 @@ class graphite(
                 File['/var/lib/graphite']]
   }
 
+  file { '/var/lib/graphite/storage/log':
+    ensure  => directory,
+    owner   => 'www-data',
+    group   => 'www-data',
+    require => File['/var/lib/graphite/storage'],
+  }
+
+  file { '/var/lib/graphite/storage/rrd':
+    ensure  => directory,
+    owner   => 'www-data',
+    group   => 'www-data',
+    require => File['/var/lib/graphite/storage'],
+  }
+
+  file { '/var/lib/graphite/storage/whisper':
+    ensure  => directory,
+    owner   => 'www-data',
+    group   => 'www-data',
+    require => File['/var/lib/graphite/storage'],
+  }
+
   file { '/var/log/graphite':
     ensure  => directory,
     owner   => 'www-data',
