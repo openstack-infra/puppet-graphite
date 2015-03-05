@@ -5,6 +5,9 @@ class graphite(
   $graphite_admin_user = '',
   $graphite_admin_email = '',
   $graphite_admin_password = '',
+  $storage_carbon_retentions = '60:90d',
+  $storage_stats_retentions = '10s:8h,60s:7d,1h:1y,1d:5y',
+  $storage_default_retentions = '60:90d',
 ) {
   $packages = [ 'python-django',
                 'python-django-tagging',

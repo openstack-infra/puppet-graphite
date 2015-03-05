@@ -9,12 +9,12 @@
 # CARBON_METRIC_PREFIX and CARBON_METRIC_INTERVAL settings
 [carbon]
 pattern = ^carbon\.
-retentions = 60:90d
+retentions = <%= @storage_carbon_retentions %>
 
 [stats]
 pattern = ^stats.*
-retentions = 10s:8h,60s:7d,1h:1y,1d:5y
+retentions = <%= @storage_stats_retentions %>
 
 [default]
 pattern = .*
-retentions = 60:90d
+retentions = <%= @storage_default_retentions %>
