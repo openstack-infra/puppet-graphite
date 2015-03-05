@@ -5,6 +5,23 @@ class graphite(
   $graphite_admin_user = '',
   $graphite_admin_email = '',
   $graphite_admin_password = '',
+  $storage_schemas = [
+    {
+      'name'       => 'carbon',
+      'pattern'    => '^carbon\.',
+      'retentions' => '60:90d',
+    },
+    {
+      'name'       => 'stats',
+      'pattern'    => '^stats.*',
+      'retentions' => '10s:8h,60s:7d,1h:1y,1d:5y',
+    },
+    {
+      'name'       => 'default',
+      'pattern'    => '.*',
+      'retentions' => '60:90d',
+    }
+  ],
 ) {
   $packages = [ 'python-django',
                 'python-django-tagging',
