@@ -20,6 +20,10 @@
         ErrorLog /var/log/apache2/graphite-error.log
         CustomLog /var/log/apache2/graphite-access.log common
 
+        # Add CORS authorization to the header so third-party services can pull
+        # metrics data via API calls for things like vizualiation dashboards.
+        Header set Access-Control-Allow-Origin "*"
+
         # I've found that an equal number of processes & threads tends
         # to show the best performance for Graphite (ymmv).
         WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
