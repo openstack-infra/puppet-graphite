@@ -161,6 +161,10 @@ class graphite(
     template => 'graphite/graphite.vhost.erb',
   }
 
+  a2mod { 'headers':
+    ensure => present
+  }
+
   vcsrepo { '/opt/statsd':
     ensure   => latest,
     provider => git,
