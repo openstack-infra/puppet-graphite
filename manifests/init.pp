@@ -136,6 +136,48 @@ class graphite(
     require => Package[$::apache::params::apache_name],
   }
 
+  file { '/var/log/graphite/carbon-cache-a':
+    ensure  => directory,
+    owner   => 'www-data',
+    group   => 'www-data',
+    require => File['/var/log/graphite'],
+  }
+
+  include logrotate
+  logrotate::file { 'querylog':
+    log     => "/var/log/graphite/carbon-cache-a/query.log",
+    options => [
+      'compress',
+      'copytruncate',
+      'missingok',
+      'rotate 7',
+      'daily',
+      'notifempty',
+    ],
+  }
+  logrotate::file { 'listenerlog':
+    log     => "/var/log/graphite/carbon-cache-a/listener.log",
+    options => [
+      'compress',
+      'copytruncate',
+      'missingok',
+      'rotate 7',
+      'daily',
+      'notifempty',
+    ],
+  }
+  logrotate::file { 'createslog':
+    log     => "/var/log/graphite/carbon-cache-a/creates.log",
+    options => [
+      'compress',
+      'copytruncate',
+      'missingok',
+      'rotate 7',
+      'daily',
+      'notifempty',
+    ],
+  }
+
   file { '/etc/graphite':
     ensure  => directory,
   }
