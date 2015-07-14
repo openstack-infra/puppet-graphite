@@ -28,7 +28,7 @@ class graphite(
                 'python-cairo',
                 'nodejs' ]
 
-  include apache
+  include ::httpd
   include pip
 
   package { $packages:
@@ -104,7 +104,7 @@ class graphite(
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
-    require => [Package[$::apache::params::apache_name],
+    require => [Class['httpd'],
                 File['/var/lib/graphite']]
   }
 
@@ -133,7 +133,7 @@ class graphite(
     ensure  => directory,
     owner   => 'www-data',
     group   => 'www-data',
-    require => Package[$::apache::params::apache_name],
+    require => Class['httpd'],
   }
 
   file { '/var/log/graphite/carbon-cache-a':
@@ -190,20 +190,20 @@ class graphite(
     onlyif  => 'test ! -f /var/lib/graphite/storage/graphite.db',
     require => [ Exec['install_graphite_web'],
       File['/var/lib/graphite'],
-      Package[$::apache::params::apache_name],
+      Class['httpd'],
       File['/usr/local/lib/python2.7/dist-packages/graphite/local_settings.py'],
       File['/usr/local/bin/graphite-init-db.py'],
       File['/etc/graphite/admin.ini']],
   }
 
-  apache::vhost { $vhost_name:
+  ::httpd::vhost { $vhost_name:
     port     => 80,
     priority => '50',
     docroot  => '/var/lib/graphite/webapp',
     template => 'graphite/graphite.vhost.erb',
   }
 
-  a2mod { 'headers':
+  httpd_mod { 'headers':
     ensure => present
   }
 
@@ -266,7 +266,7 @@ class graphite(
     group   => 'www-data',
     content => template('graphite/admin.ini'),
     require => [ File['/etc/graphite'],
-      Package[$::apache::params::apache_name]],
+      Class['httpd']],
   }
 
   file { '/etc/init.d/carbon-cache':
