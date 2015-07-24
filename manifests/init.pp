@@ -31,6 +31,8 @@ class graphite(
   include ::httpd
   include pip
 
+  include ::httpd::mod::wsgi
+
   package { $packages:
     ensure => present,
   }
