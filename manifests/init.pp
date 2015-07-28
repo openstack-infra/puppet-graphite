@@ -1,10 +1,10 @@
 # == Class: graphite
 #
 class graphite(
+  $graphite_admin_user,
+  $graphite_admin_email,
+  $graphite_admin_password,
   $vhost_name = $::fqdn,
-  $graphite_admin_user = '',
-  $graphite_admin_email = '',
-  $graphite_admin_password = '',
   $storage_schemas = [
     {
       'name'       => 'carbon',
