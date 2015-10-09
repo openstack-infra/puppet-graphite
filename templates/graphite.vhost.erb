@@ -53,8 +53,12 @@
         # The graphite.wsgi file has to be accessible by apache. It won't
         # be visible to clients because of the DocumentRoot though.
         <Directory /etc/graphite/>
-                Order deny,allow
-                Allow from all
+                <IfVersion >= 2.4>
+                    Require all granted
+                </IfVersion>
+                <IfVersion < 2.4>
+                    Order deny,allow
+                    Allow from all
+                </IfVersion>
         </Directory>
-
 </VirtualHost>
