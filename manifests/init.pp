@@ -46,8 +46,10 @@ class graphite(
     source   => 'https://github.com/graphite-project/graphite-web.git',
   }
 
+  # Install data to /usr/local/share because it's example data and
+  # we don't want pip to know about our real data location
   exec { 'install_graphite_web' :
-    command     => 'pip install --install-option="--install-scripts=/usr/local/bin" --install-option="--install-lib=/usr/local/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" /opt/graphite-web',
+    command     => 'pip install --install-option="--install-scripts=/usr/local/bin" --install-option="--install-lib=/usr/local/lib/python2.7/dist-packages" --install-option="--install-data=/usr/local/share/graphite" /opt/graphite-web',
     path        => '/usr/local/bin:/usr/bin:/bin',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/graphite-web'],
@@ -62,8 +64,10 @@ class graphite(
     source   => 'https://github.com/graphite-project/carbon.git',
   }
 
+  # Install data to /usr/local/share because it's example data and
+  # we don't want pip to know about our real data location
   exec { 'install_carbon' :
-    command     => 'pip install --install-option="--install-scripts=/usr/local/bin" --install-option="--install-lib=/usr/local/lib/python2.7/dist-packages" --install-option="--install-data=/var/lib/graphite" /opt/carbon',
+    command     => 'pip install --install-option="--install-scripts=/usr/local/bin" --install-option="--install-lib=/usr/local/lib/python2.7/dist-packages" --install-option="--install-data=/usr/local/share/graphite" /opt/carbon',
     path        => '/usr/local/bin:/usr/bin:/bin',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/carbon'],
