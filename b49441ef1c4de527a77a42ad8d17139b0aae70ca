@@ -1,0 +1,8 @@
+Verified+2: Jenkins
+Code-Review+2: Jeremy Stanley <fungi@yuggoth.org>
+Workflow+1: Jeremy Stanley <fungi@yuggoth.org>
+Submitted-by: Jenkins
+Submitted-at: Sun, 08 Nov 2015 15:10:08 +0000
+Reviewed-on: https://review.openstack.org/242842
+Project: openstack-infra/puppet-graphite
+Branch: refs/heads/master
