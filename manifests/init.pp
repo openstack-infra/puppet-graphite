@@ -209,8 +209,10 @@ class graphite(
     template => 'graphite/graphite.vhost.erb',
   }
 
-  httpd_mod { 'headers':
-    ensure => present
+  if ! defined(Httpd_mod['headers']) {
+    httpd_mod { 'headers':
+      ensure => present,
+    }
   }
 
   vcsrepo { '/opt/statsd':
