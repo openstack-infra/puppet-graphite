@@ -112,6 +112,19 @@ class graphite(
     ensure  => directory,
   }
 
+  file { '/var/lib/graphite/webapp':
+    ensure  => directory,
+    require => [File['/var/lib/graphite']],
+  }
+
+  file { '/var/lib/graphite/webapp/content':
+    ensure  => directory,
+    source  => '/opt/graphite-web/webapp/content',
+    recurse => true,
+    require => [File['/var/lib/graphite/webapp'],
+                Vcsrepo['/opt/graphite-web']],
+  }
+
   file { '/var/lib/graphite/storage':
     ensure  => directory,
     owner   => 'www-data',
