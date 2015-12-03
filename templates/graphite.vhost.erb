@@ -61,4 +61,9 @@
                     Allow from all
                 </IfVersion>
         </Directory>
+	<IfVersion >= 2.4>
+	        <Directory /var/lib/graphite/webapp/content/>
+        	        Require all granted
+        	</Directory>
+	</IfVersion>
 </VirtualHost>
