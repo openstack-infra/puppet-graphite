@@ -43,12 +43,18 @@ class graphite(
     ensure => present,
   }
 
+  if $::operatingsystemrelease == '12.04' {
+    # pin version because of https://github.com/graphite-project/graphite-web/issues/650
+    $graphite_rev = '7f8c33da809e2938df55c1ff57ab5329d8d7b878'
+  }
+  else {
+    $graphite_rev = '0.9.15'
+  }
+
   vcsrepo { '/opt/graphite-web':
     ensure   => present,
     provider => git,
-    # revision => '0.9.x',
-    # pin version because of https://github.com/graphite-project/graphite-web/issues/650
-    revision => '7f8c33da809e2938df55c1ff57ab5329d8d7b878',
+    revision => $graphite_rev,
     source   => 'https://github.com/graphite-project/graphite-web.git',
   }
 
