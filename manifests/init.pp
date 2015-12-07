@@ -26,7 +26,8 @@ class graphite(
   $packages = [ 'python-django',
                 'python-django-tagging',
                 'python-cairo',
-                'nodejs' ]
+                'nodejs',
+                'python-tz' ]
 
   include ::httpd
   include ::pip
