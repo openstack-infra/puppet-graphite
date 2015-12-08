@@ -1,0 +1,9 @@
+Code-Review+2: James E. Blair <corvus@inaugust.com>
+Verified+2: Jenkins
+Code-Review+2: yolanda.robla <info@ysoft.biz>
+Workflow+1: yolanda.robla <info@ysoft.biz>
+Submitted-by: Jenkins
+Submitted-at: Tue, 08 Dec 2015 08:22:58 +0000
+Reviewed-on: https://review.openstack.org/252909
+Project: openstack-infra/puppet-graphite
+Branch: refs/heads/master
