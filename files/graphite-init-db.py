@@ -20,8 +20,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "graphite.settings")
 import sys
 import ConfigParser
 
+import django
 from django.core import management
 from django.contrib.auth import models as auth_models
+
+django.setup()
 
 config = ConfigParser.ConfigParser()
 config.read(os.path.expanduser(sys.argv[1]))
