@@ -71,16 +71,8 @@ describe 'puppet-graphite module', :if => ['debian', 'ubuntu'].include?(os[:fami
       end
     end
 
-    describe file('/etc/logrotate.d/querylog') do
-      its(:content) { should include '/var/log/graphite/carbon-cache-a/query.log' }
-    end
-
-    describe file('/etc/logrotate.d/listenerlog') do
-      its(:content) { should include '/var/log/graphite/carbon-cache-a/listener.log' }
-    end
-
-    describe file('/etc/logrotate.d/createslog') do
-      its(:content) { should include '/var/log/graphite/carbon-cache-a/creates.log' }
+    describe file('/etc/logrotate.d/graphite-carbon') do
+      its(:content) { should include '/var/log/graphite/carbon-cache-a/*.log' }
     end
 
     describe file('/etc/statsd/config.js') do

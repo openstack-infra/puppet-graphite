@@ -176,37 +176,16 @@ class graphite(
   }
 
   include ::logrotate
-  logrotate::file { 'querylog':
-    log     => '/var/log/graphite/carbon-cache-a/query.log',
+  logrotate::file { 'graphite-carbon':
+    log     => '/var/log/graphite/carbon-cache-a/*.log',
     options => [
       'compress',
-      'copytruncate',
+      'nocreate',
       'missingok',
       'rotate 7',
       'daily',
       'notifempty',
-    ],
-  }
-  logrotate::file { 'listenerlog':
-    log     => '/var/log/graphite/carbon-cache-a/listener.log',
-    options => [
-      'compress',
-      'copytruncate',
-      'missingok',
-      'rotate 7',
-      'daily',
-      'notifempty',
-    ],
-  }
-  logrotate::file { 'createslog':
-    log     => '/var/log/graphite/carbon-cache-a/creates.log',
-    options => [
-      'compress',
-      'copytruncate',
-      'missingok',
-      'rotate 7',
-      'daily',
-      'notifempty',
+      'sharedscripts',
     ],
   }
 
