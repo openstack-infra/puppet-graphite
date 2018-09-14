@@ -1,0 +1,9 @@
+Code-Review+2: Clark Boylan <cboylan@sapwetik.org>
+Code-Review+2: James E. Blair <corvus@inaugust.com>
+Workflow+1: James E. Blair <corvus@inaugust.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 14 Sep 2018 17:21:17 +0000
+Reviewed-on: https://review.openstack.org/602525
+Project: openstack-infra/puppet-graphite
+Branch: refs/heads/master
