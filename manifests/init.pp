@@ -22,6 +22,9 @@ class graphite(
     }
   ],
   $vhost_name      = $::fqdn,
+  # Have statsd listen on '::' which, thanks to dual-stack,
+  # gets ipv4 and ipv6 connections.
+  $statsd_ipv6_listen = true,
 ) {
   $packages = [ 'python-django',
                 'python-django-tagging',

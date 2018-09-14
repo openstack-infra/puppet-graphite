@@ -80,6 +80,8 @@ describe 'puppet-graphite module', :if => ['debian', 'ubuntu'].include?(os[:fami
       it { should be_owned_by 'statsd' }
       it { should be_grouped_into 'statsd' }
       its(:content) { should include 'graphitePort: 2003' }
+      its(:content) { should include "address: '::'" }
+
     end
 
     describe file('/etc/graphite/carbon.conf') do
