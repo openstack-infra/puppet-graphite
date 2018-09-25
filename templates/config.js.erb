@@ -56,8 +56,8 @@ Optional Variables:
 , port: 8125
 , deleteTimers: true
 , deleteCounters: true
-<% if @statsd_ipv6_listen %>
-, address: '::',
+<% if @statsd_ipv6_listen -%>
+, address: '::'
 , address_ipv6: true
-<% end %>
+<% end -%>
 }
