@@ -141,10 +141,12 @@ describe 'puppet-graphite module', :if => ['debian', 'ubuntu'].include?(os[:fami
   describe 'required services' do
     describe service('carbon-cache') do
       it { should be_enabled }
+      it { should be_running }
     end
 
     describe service('statsd') do
       it { should be_enabled }
+      it { should be_running }
     end
   end
 
