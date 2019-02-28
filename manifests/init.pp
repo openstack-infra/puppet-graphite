@@ -259,9 +259,25 @@ class graphite(
     require => File['/etc/graphite'],
   }
 
+  # later versions of django require a different wsgi loader; swap it
+  # in here for > trusty
+  case $::operatingsystem {
+    'Ubuntu': {
+      if versioncmp($::operatingsystemrelease, '14.04') <= 0 {
+        $django_wsgi_template = 'graphite.wsgi.erb'
+      }
+      else {
+        $django_wsgi_template = 'graphite.wsgi.django17.erb'
+      }
+    }
+    default: {
+      fail('Platform not supported')
+    }
+  }
+
   file { '/etc/graphite/graphite.wsgi':
     mode    => '0444',
-    content => template('graphite/graphite.wsgi.erb'),
+    content => template("graphite/${django_wsgi_template}"),
     require => File['/etc/graphite'],
   }
 
