@@ -69,7 +69,8 @@ class graphite(
     path        => '/usr/local/bin:/usr/bin:/bin',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/graphite-web'],
-    require     => [Exec['install_carbon'],
+    require     => [Class['pip'],
+                    Exec['install_carbon'],
                     File['/var/lib/graphite/storage']]
   }
 
@@ -87,7 +88,8 @@ class graphite(
     path        => '/usr/local/bin:/usr/bin:/bin',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/carbon'],
-    require     => [Exec['install_whisper'],
+    require     => [Class['pip],
+                    Exec['install_whisper'],
                     File['/var/lib/graphite/storage']]
   }
 
@@ -103,6 +105,10 @@ class graphite(
     path        => '/usr/local/bin:/usr/bin:/bin/',
     refreshonly => true,
     subscribe   => Vcsrepo['/opt/whisper'],
+    require     => [
+      Class['pip'],
+      Package['build-essential'],
+    ],
   }
 
   user { 'statsd':
