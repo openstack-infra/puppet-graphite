@@ -25,6 +25,10 @@ class graphite(
   # Have statsd listen on '::' which, thanks to dual-stack,
   # gets ipv4 and ipv6 connections.
   $statsd_ipv6_listen = true,
+
+  $ssl_cert_file = '',
+  $ssl_chain_file = '',
+  $ssl_key_file = '',
 ) {
   $packages = [ 'python-django',
                 'python-django-tagging',
@@ -222,11 +226,17 @@ class graphite(
       File['/etc/graphite/admin.ini']],
   }
 
+  if $ssl_cert_file != '' {
+    $http_template = 'graphite/graphite.ssl.vhost.erb'
+  } else {
+    $http_template = 'graphite/graphite.vhost.erb'
+  }
+
   ::httpd::vhost { $vhost_name:
     port     => 80,
     priority => '50',
     docroot  => '/var/lib/graphite/webapp',
-    template => 'graphite/graphite.vhost.erb',
+    template => $http_template,
   }
 
   if !defined(Httpd::Mod['headers']) {
