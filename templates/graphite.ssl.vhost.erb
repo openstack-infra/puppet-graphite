@@ -1,0 +1,71 @@
+<VirtualHost *:80>
+  ErrorLog /var/log/apache2/graphite-error.log
+  CustomLog /var/log/apache2/graphite-access.log common
+  LogLevel warn
+  ServerSignature Off
+
+  Redirect / https://<%= scope.lookupvar("graphite::vhost_name") %>/
+</VirtualHost>
+
+<VirtualHost *:443>
+        SSLEngine on
+        SSLCertificateFile      <%= @ssl_cert_file %>
+        SSLCertificateKeyFile   <%= @ssl_key_file %>
+        <%# The original default was '' -%>
+        <%# scope.lookupvar returns nil for an undefined variable in puppet 4 -%>
+        <%# scope.lookupvar returns :undef for an undefined variable in puppet 3 -%>
+        <% unless ['', nil, :undef].include?@ssl_chain_file %>
+        SSLCertificateChainFile <%= @ssl_chain_file %>
+        <% end %>
+
+        DocumentRoot "/var/lib/graphite/webapp"
+        ErrorLog /var/log/apache2/graphite-error.log
+        CustomLog /var/log/apache2/graphite-access.log common
+
+        # Add CORS authorization to the header so third-party services can pull
+        # metrics data via API calls for things like vizualiation dashboards.
+        Header set Access-Control-Allow-Origin "*"
+
+        # I've found that an equal number of processes & threads tends
+        # to show the best performance for Graphite (ymmv).
+        WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
+        WSGIProcessGroup graphite
+        WSGIApplicationGroup %{GLOBAL}
+        SetEnv GRAPHITE_STORAGE_DIR /var/lib/graphite/storage
+        WSGIImportScript /etc/graphite/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+
+        # XXX You will need to create this file! There is a graphite.wsgi.example
+        # file in this directory that you can safely use, just copy it to graphite.wgsi
+        WSGIScriptAlias / /etc/graphite/graphite.wsgi
+
+        Alias /content/ /var/lib/graphite/webapp/content/
+        <Location "/content/">
+                SetHandler None
+        </Location>
+
+        # XXX In order for the django admin site media to work you
+        # must change @DJANGO_ROOT@ to be the path to your django
+        # installation, which is probably something like:
+        # /usr/lib/python2.6/site-packages/django
+        Alias /media/ "/usr/lib/python2.7/dist-packages/django/contrib/admin/media/"
+        <Location "/media/">
+                SetHandler None
+        </Location>
+
+        # The graphite.wsgi file has to be accessible by apache. It won't
+        # be visible to clients because of the DocumentRoot though.
+        <Directory /etc/graphite/>
+                <IfVersion >= 2.4>
+                    Require all granted
+                </IfVersion>
+                <IfVersion < 2.4>
+                    Order deny,allow
+                    Allow from all
+                </IfVersion>
+        </Directory>
+        <IfVersion >= 2.4>
+                <Directory /var/lib/graphite/webapp/content/>
+                        Require all granted
+                </Directory>
+        </IfVersion>
+</VirtualHost>
