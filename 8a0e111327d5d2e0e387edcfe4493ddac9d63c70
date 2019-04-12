@@ -1,0 +1,8 @@
+Code-Review+2: Ian Wienand <iwienand@redhat.com>
+Workflow+1: Ian Wienand <iwienand@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 12 Apr 2019 03:10:09 +0000
+Reviewed-on: https://review.openstack.org/651950
+Project: openstack-infra/puppet-graphite
+Branch: refs/heads/master
