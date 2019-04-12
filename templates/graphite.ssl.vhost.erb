@@ -9,13 +9,10 @@
 
 <VirtualHost *:443>
         SSLEngine on
-        SSLCertificateFile      <%= @ssl_cert_file %>
-        SSLCertificateKeyFile   <%= @ssl_key_file %>
-        <%# The original default was '' -%>
-        <%# scope.lookupvar returns nil for an undefined variable in puppet 4 -%>
-        <%# scope.lookupvar returns :undef for an undefined variable in puppet 3 -%>
-        <% unless ['', nil, :undef].include?@ssl_chain_file %>
-        SSLCertificateChainFile <%= @ssl_chain_file %>
+        SSLCertificateFile      <%= scope.lookupvar("graphite::ssl_cert_file") %>
+        SSLCertificateKeyFile   <%= scope.lookupvar("graphite::ssl_key_file") %>
+        <% if scope.lookupvar("graphite::ssl_chain_file") != "" %>
+        SSLCertificateChainFile <%= scope.lookupvar("graphite::ssl_chain_file") %>
         <% end %>
         SSLProtocol All -SSLv2 -SSLv3
         # Note: this list should ensure ciphers that provide forward secrecy
