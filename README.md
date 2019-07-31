@@ -1,5 +1,3 @@
-# OpenStack Graphite Module
+# This repo has moved to OpenDev
 
-## Overview
-
-Configures Graphite.
+It can now be found at [https://opendev.org/opendev/puppet-graphite](https://opendev.org/opendev/puppet-graphite)
